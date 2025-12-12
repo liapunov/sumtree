@@ -91,7 +91,7 @@ class SumTree(object):
             l_val = cur.left_child.val
             if val <= l_val:
                 return self.retrieve(val, cur.left_child)
-            if val <= self.root.val:
+            if val <= cur.val:
                 return self.retrieve(val - l_val, cur.right_child)
             else:
                 raise ValueError("Trying to extract a value with priority \
