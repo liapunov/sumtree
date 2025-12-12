@@ -154,7 +154,7 @@ class PriorityQueue(SumTree):
         total_pi = self.root.val + epsilon
         imp_sampled_pi = (total_pi / ((self.size + 1) * adj_pi)) ** self.beta
         # beta = 0.5 maxes out at 1 after around
-        # 100.000 cicles with a beta rate of 1.000001
+        # 100.000 cycles with a beta rate of 1.000001
         # maxing out is bad (infinite recursion)
         self.beta = min(self.beta*self.beta_rate, 0.999)
         return imp_sampled_pi*adj_pi
