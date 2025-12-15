@@ -28,6 +28,7 @@ if SRC_PATH not in sys.path:
     sys.path.append(SRC_PATH)
 
 from Sumtree import STNode, SumTree  # noqa: E402
+from Sumtree import PriorityQueue  # noqa: E402
 
 
 def build_sample_tree():
@@ -58,6 +59,26 @@ class SumTreeRetrieveTests(unittest.TestCase):
         node = self.tree.retrieve(9)
         self.assertTrue(node.is_leaf)
         self.assertEqual(node.payload, "right")
+
+
+class PriorityQueueReplacementTests(unittest.TestCase):
+    def test_replacement_respects_max_size_and_updates_leaf(self):
+        queue = PriorityQueue(max_size=1)
+
+        initial_leaf = STNode.createLeaf(val=1, payload="initial")
+        queue.insert(new=initial_leaf)
+        self.assertEqual(queue.size, 1)
+
+        replacement_leaf = STNode.createLeaf(val=5, payload="replacement")
+        queue.insert(new=replacement_leaf)
+
+        self.assertEqual(queue.size, 1)
+        self.assertEqual(queue.root.payload, "replacement")
+        self.assertEqual(queue.root.val, 5)
+
+        retrieved = queue.retrieve(queue.root.val)
+        self.assertIsNotNone(retrieved)
+        self.assertEqual(retrieved.payload, "replacement")
 
 
 if __name__ == "__main__":
