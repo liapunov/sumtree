@@ -169,7 +169,8 @@ class PriorityQueue(SumTree):
             new = STNode.createLeaf(val=priority, payload=payload)
         if self.size >= self.max_size:
             # if we have reached capacity, replace a value
-            # (no need to insert: find a similar value and replace it)
+            # (no need to insert: replace the leaf sampled by the new priority,
+            # without any similarity matching)
             to_replace = self.retrieve(new.val)
             to_replace.val = new.val
             to_replace.payload = new.payload
