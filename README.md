@@ -1,7 +1,9 @@
 # sumtree
 A small primer on sumtrees
 
-I encountered sum trees first when reading about DQN and the concept of priority buffers. Before that, I had not encountered sum trees despite being a pretty simple form of binary tree. This repository is an exploration of sum trees with a personal implementation of both vanilla sum trees and sum-tree-based priority buffers for use in RL.
+> 📘 **Start here:** The full walkthrough lives in the [SumTree Introduction notebook](src/SumTree%20Introduction.ipynb). It explains stochastic priority queues, illustrates performance characteristics, and shows how `PriorityQueue` applies importance sampling for prioritized experience replay. If you prefer a GitHub-friendly format, read the [Markdown export](SUMTREE_PRIMER.md) instead.
+
+I encountered sum trees first when reading about DQN and the concept of priority buffers. Before that, I had not encountered sum trees despite being a pretty simple form of binary tree. This repository is an exploration of sum trees with a personal implementation of both vanilla sum trees and sum-tree-based priority buffers for use in RL. The primer above accompanies the implementation in `src/Sumtree.py` and demonstrates the structures in action.
 
 ## Visual simulator
 
