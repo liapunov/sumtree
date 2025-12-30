@@ -86,6 +86,9 @@ class SumTree(object):
         if cur is None:
             cur = self.root
         if cur.is_leaf:
+            if val > cur.val:
+                raise ValueError("Trying to extract a value with priority "
+                                 "higher than the maximum allowed")
             return cur
         else:
             l_val = cur.left_child.val
@@ -112,7 +115,7 @@ higher than the maximum allowed")
                 self.update(node.parent, value)
     
     @classmethod
-    def createFromList(list_of_pairs):
+    def createFromList(cls, list_of_pairs):
         # original code by adventuresinML, lightly adapted
         nodes = [STNode.createLeaf(val=v[0], payload=v[1]) 
                  for i, v in enumerate(list_of_pairs)]
@@ -122,7 +125,7 @@ higher than the maximum allowed")
             # consecutive nodes (iter always yelds the next element)
             inodes = iter(nodes)
             nodes = [STNode(*pair) for pair in zip(inodes, inodes)]
-        return nodes[0], leaf_nodes
+        return cls(nodes[0]), leaf_nodes
 
 class PriorityQueue(SumTree):
     
@@ -171,9 +174,8 @@ class PriorityQueue(SumTree):
             # if we have reached capacity, replace a value
             # (no need to insert: replace the leaf sampled by the new priority,
             # without any similarity matching)
-            to_replace = self.retrieve(new.val)
-            to_replace.val = new.val
-            to_replace.payload = new.payload
+            to_replace = self.retrieve(randint(0, self.root.val))
+            self.update(to_replace, new.val, payload=new.payload)
             return
         else:
             self.size += 1
@@ -202,7 +204,7 @@ but the list provided has length {len(vals)}."
     def createFromList(cls, buffer_list, max_size):
         
         size = len(buffer_list)
-        tree = SumTree.createFromList(buffer_list)
+        tree, _ = SumTree.createFromList(buffer_list)
         tree_root = tree.root
         del tree
         return cls(root=tree_root, size=size, max_size=max_size)
